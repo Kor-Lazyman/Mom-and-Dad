@@ -1,4 +1,5 @@
 import random
+import pandas as pd
 class GridWorld():
     def __init__(self):
         self.x=0
@@ -58,8 +59,55 @@ class GridWorld():
     
     def reset(self):
         self.x=0
-        self,y=0
+        self.y=0
         return (self.x,self.y)
     
-
+class Agent ():
+    def __init__ (self):
+        pass
+    
+    def select_action(self):
+        coin=random.random()
+        
+        if coin<0.25:
+            action=0
+            
+        elif coin<0.5:
+            action=1
+        
+        elif coin<0.75:
+            action=2
+            
+        else:
+            action=3
        
+        return action
+    
+    
+def main():
+    env=GridWorld()
+    agent=Agent()
+    data=[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+    gamma=1.0
+    alpha=0.0001
+    
+    for k in range(50000):
+        done=False
+        history=[]
+        while not done:
+            action=agent.select_action()
+            (x,y),reward,done=env.step(action)
+            history.append((x,y,reward))
+        env.reset()
+    
+        cum_reward=0
+        for transition in history[::-1]:
+            x,y,reward=transition
+            data[x][y]=data[x][y]+alpha*(cum_reward-data[x][y])
+            cum_reward=reward+gamma*cum_reward
+        
+    df=pd.DataFrame(data)
+    print(df)
+
+main()
+        
