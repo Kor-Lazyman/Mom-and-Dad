@@ -103,6 +103,7 @@ def main():
     
     df=pd.DataFrame(data)
     print(df)
+    print(df.describe())
 
 main()
         
