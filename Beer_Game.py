@@ -85,7 +85,7 @@ def Retailer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Wholesal
         #업데이트
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,0]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Retailer.order]
         
         #DataFrame에 추가
         Retailer_df.iloc[x]=temp
@@ -116,7 +116,7 @@ def Retailer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Wholesal
         
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,Present_order]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Present_order]
         
         Retailer_df.iloc[x]=temp
         
@@ -137,21 +137,21 @@ def Retailer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Wholesal
         
         Retailer.Order()
         
-        Retailer.On_delivery(Wholesaler_df.loc[x-2][-1])
+        Retailer.On_delivery(Wholesaler_df.loc[x-1][-3])
         
         Retailer.Delivery()
         
         Retailer.Cost(-Retailer_df.loc[1][6])
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,Present_order]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Present_order]
         
         Retailer_df.iloc[x]=temp
         Present_inventory=max(Retailer.available-Retailer.total_order,0)
         Present_order=Retailer.order
         
     else:
-        Retailer.Incoming_delivery(Wholesaler_df.loc[x-3][-1])
+        Retailer.Incoming_delivery(Wholesaler_df.loc[x-2][-3])
         
         Retailer.Inventory=(Present_inventory)
         Retailer.Available_update()
@@ -164,14 +164,14 @@ def Retailer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Wholesal
         
         Retailer.Order()
         
-        Retailer.On_delivery(Wholesaler_df.loc[x-2][-1])
+        Retailer.On_delivery(Wholesaler_df.loc[x-1][-3])
         
         Retailer.Delivery()
         
         Retailer.Cost(-Retailer_df.loc[x-1][6])
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,Present_order]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Present_order]
         
         Retailer_df.iloc[x]=temp
         Present_inventory=max(Retailer.available-Retailer.total_order,0)
@@ -201,7 +201,7 @@ def Wholesaler_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,df,Dis
         Retailer.Total_order()
         
         #발주 해야하는 양
-        Retailer.order=random.randint(1,10)
+        Retailer.order=random.randint(5,10)
         
         #현재 배송이 오고있는 재고
         Retailer.On_delivery(0)
@@ -215,7 +215,7 @@ def Wholesaler_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,df,Dis
         #업데이트
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,0]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Retailer.order]
         
         #DataFrame에 추가
         Retailer_df.iloc[x]=temp
@@ -236,7 +236,7 @@ def Wholesaler_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,df,Dis
         
         Retailer.Total_order()
         
-        Retailer.order=random.randint(1,10)
+        Retailer.order=random.randint(5,10)
         
         Retailer.On_delivery(0)
         
@@ -246,7 +246,7 @@ def Wholesaler_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,df,Dis
         
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,Present_order]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Present_order]
         
         Retailer_df.iloc[x]=temp
         
@@ -265,23 +265,23 @@ def Wholesaler_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,df,Dis
         
         Retailer.Total_order()
         
-        Retailer.order=random.randint(1,10)
+        Retailer.order=random.randint(5,10)
         
-        Retailer.On_delivery(Distributer_df.loc[x-2][-1])
+        Retailer.On_delivery(Distributer_df.loc[x-2][-3])
         
         Retailer.Delivery()
         
         Retailer.Cost(-Retailer_df.loc[1][6])
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,Present_order]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Present_order]
         
         Retailer_df.iloc[x]=temp
         Present_inventory=max(Retailer.available-Retailer.total_order,0)
         Present_order=Retailer.order
         
     else:
-        Retailer.Incoming_delivery(Distributer_df.loc[x-3][-1])
+        Retailer.Incoming_delivery(Distributer_df.loc[x-2][-3])
         
         Retailer.Inventory=(Present_inventory)
         Retailer.Available_update()
@@ -292,16 +292,16 @@ def Wholesaler_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,df,Dis
         
         Retailer.Total_order()
         
-        Retailer.order=random.randint(1,10)
+        Retailer.order=random.randint(5,10)
         
-        Retailer.On_delivery(Distributer_df.loc[x-2][-1])
+        Retailer.On_delivery(Distributer_df.loc[x-1][-3])
         
         Retailer.Delivery()
         
         Retailer.Cost(-Retailer_df.loc[x-1][6])
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,Present_order]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Present_order]
         
         Retailer_df.iloc[x]=temp
         Present_inventory=max(Retailer.available-Retailer.total_order,0)
@@ -333,7 +333,7 @@ def Distributer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Whole
         Retailer.Total_order()
         
         #발주 해야하는 양
-        Retailer.order=random.randint(1,10)
+        Retailer.order=random.randint(5,10)
         
         #현재 배송이 오고있는 재고
         Retailer.On_delivery(0)
@@ -347,7 +347,7 @@ def Distributer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Whole
         #업데이트
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,0]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Retailer.order]
         
         #DataFrame에 추가
         Retailer_df.iloc[x]=temp
@@ -368,9 +368,9 @@ def Distributer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Whole
         
         Retailer.Total_order()
         
-        Retailer.order=random.randint(1,10)
+        Retailer.order=random.randint(5,10)
         
-        Retailer.On_delivery(Retailer_df.loc[0][-1])
+        Retailer.On_delivery(Retailer_df.loc[x-1][-3])
         
         Retailer.Delivery()
         
@@ -378,7 +378,7 @@ def Distributer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Whole
         
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,Present_order]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Present_order]
         
         Retailer_df.iloc[x]=temp
         
@@ -397,23 +397,23 @@ def Distributer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Whole
         
         Retailer.Total_order()
         
-        Retailer.order=random.randint(1,10)
+        Retailer.order=random.randint(5,10)
         
-        Retailer.On_delivery(Manufacture_df.loc[0][-1])
+        Retailer.On_delivery(Manufacture_df.loc[x-1][-3])
         
         Retailer.Delivery()
         
         Retailer.Cost(-Retailer_df.loc[1][6])
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,Present_order]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Present_order]
         
         Retailer_df.iloc[x]=temp
         Present_inventory=max(Retailer.available-Retailer.total_order,0)
         Present_order=Retailer.order
         
     else:
-        Retailer.Incoming_delivery(Manufacture_df.loc[x-2][-1])
+        Retailer.Incoming_delivery(Manufacture_df.loc[x-2][-3])
         
         Retailer.Inventory=(Present_inventory)
         Retailer.Available_update()
@@ -424,16 +424,16 @@ def Distributer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Whole
         
         Retailer.Total_order()
         
-        Retailer.order=random.randint(1,10)
+        Retailer.order=random.randint(5,10)
         
-        Retailer.On_delivery(Manufacture_df.loc[x-2][-1])
+        Retailer.On_delivery(Manufacture_df.loc[x-1][-3])
         
         Retailer.Delivery()
         
         Retailer.Cost(-Retailer_df.loc[x-1][6])
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,Present_order]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Present_order]
         
         Retailer_df.iloc[x]=temp
         Present_inventory=max(Retailer.available-Retailer.total_order,0)
@@ -447,8 +447,8 @@ def Manufacturer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Dist
         Retailer.Incoming_delivery(0)
 
         #초기 재고 설정
-        first_inventory=random.randint(0, 100)
-        Retailer.Inventory=(Present_inventory)
+        first_inventory=random.randint(10, 100)
+        Retailer.Inventory=(first_inventory)
         
         #판매재고 업데이트
         Retailer.Available_update()
@@ -463,7 +463,7 @@ def Manufacturer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Dist
         Retailer.Total_order()
         
         #발주 해야하는 양
-        Retailer.order=random.randint(1,10)
+        Retailer.order=random.randint(5,10)
         
         #현재 배송이 오고있는 재고
         Retailer.On_delivery(0)
@@ -477,7 +477,7 @@ def Manufacturer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Dist
         #업데이트
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,0]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Retailer.order]
         
         #DataFrame에 추가
         Retailer_df.iloc[x]=temp
@@ -498,7 +498,7 @@ def Manufacturer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Dist
         
         Retailer.Total_order()
         
-        Retailer.order=random.randint(1,10)
+        Retailer.order=random.randint(5,10)
         
         Retailer.On_delivery(0)
         
@@ -508,7 +508,7 @@ def Manufacturer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Dist
         
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,Present_order]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Present_order]
         
         Retailer_df.iloc[x]=temp
         
@@ -529,23 +529,23 @@ def Manufacturer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Dist
         
         Retailer.Total_order()
         
-        Retailer.order=random.randint(1,10)
+        Retailer.order=random.randint(5,10)
         
-        Retailer.On_delivery(Distributer_df.loc[x-2][-1])
+        Retailer.On_delivery(Distributer_df.loc[x-1][-3])
         
         Retailer.Delivery()
         
         Retailer.Cost(-Retailer_df.loc[1][6])
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,Present_order]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Present_order]
         
         Retailer_df.iloc[x]=temp
         Present_inventory=max(Retailer.available-Retailer.total_order,0)
         Present_order=Retailer.order
         
     else:
-        Retailer.Incoming_delivery(Distributer_df.loc[x-3][-1])
+        Retailer.Incoming_delivery(Retailer_df.loc[x-2][-1])
         
         Retailer.Inventory=(Present_inventory)
         Retailer.Available_update()
@@ -556,16 +556,16 @@ def Manufacturer_Env(x,Retailer,Retailer_df,Present_inventory,Present_order,Dist
         
         Retailer.Total_order()
         
-        Retailer.order=random.randint(1,10)
+        Retailer.order=random.randint(5,10)
         
-        Retailer.On_delivery(Distributer_df.loc[x-2][-1])
+        Retailer.On_delivery(Distributer_df.loc[x-1][-3])
         
         Retailer.Delivery()
         
         Retailer.Cost(-Retailer_df.loc[x-1][6])
         temp=[Retailer.incoming_delivery,Retailer.Inventory,Retailer.available,
                        Retailer.incoming_order,Retailer.backorder,Retailer.total_order,
-                       abs(Retailer.cost),Retailer.on_delivery,Present_order]
+                       abs(Retailer.cost),Retailer.delivery,Retailer.on_delivery,Present_order]
         
         Retailer_df.iloc[x]=temp
         Present_inventory=max(Retailer.available-Retailer.total_order,0)
@@ -579,29 +579,29 @@ def main():
     Manufacture=Table()
     print("진행시킬 게임의 총 주를 입력하시오:")
     Total_Weeks=int(input())
-    Retailer_df=np.zeros((Total_Weeks,9))
+    Retailer_df=np.zeros((Total_Weeks,10))
     Retailer_df=pd.DataFrame(Retailer_df)
     Retailer_df.columns=['Incoming_delivery','Inventory','available',
                          'Incoming_order','Backorder','Total_order',
-                         'Cost','Your_delivery','Your_order']
+                         'Cost','Delivery','Your_delivery','Your_order']
 
-    Wholesaler_df=np.zeros((Total_Weeks,9))
+    Wholesaler_df=np.zeros((Total_Weeks,10))
     Wholesaler_df=pd.DataFrame(Wholesaler_df)
     Wholesaler_df.columns=['Incoming_delivery','Inventory','available',
                          'Incoming_order','Backorder','Total_order',
-                         'Cost','Your_delivery','Your_order']
+                         'Cost','Delivery','Your_delivery','Your_order']
 
-    Distributer_df=np.zeros((Total_Weeks,9))
+    Distributer_df=np.zeros((Total_Weeks,10))
     Distributer_df=pd.DataFrame(Distributer_df)
     Distributer_df.columns=['Incoming_delivery','Inventory','available',
                          'Incoming_order','Backorder','Total_order',
-                         'Cost','Your_delivery','Your_order']
+                         'Cost','Delivery','Your_delivery','Your_order']
 
-    Manufacture_df=np.zeros((Total_Weeks,9))
+    Manufacture_df=np.zeros((Total_Weeks,10))
     Manufacture_df=pd.DataFrame(Manufacture_df)
     Manufacture_df.columns=['Incoming_delivery','Inventory','available',
                          'Incoming_order','Backorder','Total_order',
-                         'Cost','Your_delivery','Your_order']
+                         'Cost','Delivery','Your_delivery','Your_order']
 
 
     Present_Retailer_Inventory,Present_Retailer_order=0,0
@@ -609,7 +609,7 @@ def main():
     Present_Distributer_Inventory,Present_Distributer_order=0,0
     Present_Manufacturer_Inventory,Present_Manufacturer_order=0,0
     
-    for x in range(5):
+    for x in range(Total_Weeks):
         Current_week=x+1
         print("현재 주 수:",Current_week)
         Manufacture_df,Present_Manufacturer_Inventory,Present_Manufacturer_order=Manufacturer_Env(x,Manufacture,Manufacture_df,Present_Manufacturer_Inventory,Present_Manufacturer_order,Distributer_df)
